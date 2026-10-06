@@ -1,0 +1,1366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DAVIKO | Luxury Fashion</title>
+  <meta name="description" content="Daviko - Timeless luxury fashion. Discover exclusive collections of haute couture, ready-to-wear, and accessories.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+/* ===== DAVIKO Luxury Fashion Website ===== */
+:root {
+  --bg: #0a0a0a;
+  --bg-elevated: #111111;
+  --bg-card: #161616;
+  --gold: #c9a96e;
+  --gold-light: #e0c992;
+  --gold-dark: #a88b4a;
+  --text: #f5f0e8;
+  --text-muted: #a39e94;
+  --border: rgba(201, 169, 110, 0.2);
+  --white: #ffffff;
+  --transition: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
+  --font-sans: 'Montserrat', system-ui, sans-serif;
+}
+
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: color var(--transition);
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: inherit;
+}
+
+/* ===== Preloader ===== */
+.preloader {
+  position: fixed;
+  inset: 0;
+  background: var(--bg);
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+
+.preloader.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.preloader-logo {
+  font-family: var(--font-serif);
+  font-size: 2.5rem;
+  font-weight: 400;
+  letter-spacing: 0.4em;
+  color: var(--gold);
+  margin-bottom: 2rem;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.preloader-bar {
+  width: 120px;
+  height: 1px;
+  background: rgba(201, 169, 110, 0.2);
+  overflow: hidden;
+}
+
+.preloader-progress {
+  height: 100%;
+  width: 0;
+  background: var(--gold);
+  animation: loadBar 1.8s ease-out forwards;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+@keyframes loadBar {
+  to { width: 100%; }
+}
+
+/* ===== Navbar ===== */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  padding: 1.25rem 0;
+  transition: background var(--transition), padding var(--transition), box-shadow var(--transition);
+}
+
+.navbar.scrolled {
+  background: rgba(10, 10, 10, 0.92);
+  backdrop-filter: blur(20px);
+  padding: 0.9rem 0;
+  box-shadow: 0 1px 0 var(--border);
+}
+
+.nav-container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-logo {
+  font-family: var(--font-serif);
+  font-size: 1.6rem;
+  font-weight: 500;
+  letter-spacing: 0.35em;
+  color: var(--text);
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  transition: color var(--transition);
+}
+
+.nav-logo:hover {
+  color: var(--gold);
+}
+
+.nav-menu-btn {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 24px;
+  z-index: 1001;
+}
+
+.nav-menu-btn span {
+  display: block;
+  height: 1.5px;
+  background: var(--text);
+  transition: var(--transition);
+}
+
+.nav-menu-btn.active span:nth-child(1) {
+  transform: translateY(6.5px) rotate(45deg);
+}
+
+.nav-menu-btn.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.nav-menu-btn.active span:nth-child(3) {
+  transform: translateY(-6.5px) rotate(-45deg);
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.nav-link {
+  font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.nav-link:hover {
+  color: var(--gold);
+}
+
+.nav-bag {
+  color: var(--text);
+  transition: color var(--transition);
+}
+
+.nav-bag:hover {
+  color: var(--gold);
+}
+
+/* Mobile Menu */
+.mobile-menu {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 10, 10, 0.98);
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+.mobile-menu.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.mobile-menu-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.mobile-link {
+  font-family: var(--font-serif);
+  font-size: 2.2rem;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  color: var(--text);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.4s ease, transform 0.4s ease, color var(--transition);
+}
+
+.mobile-menu.open .mobile-link {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.mobile-menu.open .mobile-link:nth-child(1) { transition-delay: 0.1s; }
+.mobile-menu.open .mobile-link:nth-child(2) { transition-delay: 0.15s; }
+.mobile-menu.open .mobile-link:nth-child(3) { transition-delay: 0.2s; }
+.mobile-menu.open .mobile-link:nth-child(4) { transition-delay: 0.25s; }
+.mobile-menu.open .mobile-link:nth-child(5) { transition-delay: 0.3s; }
+
+.mobile-link:hover {
+  color: var(--gold);
+}
+
+/* ===== Hero ===== */
+.hero {
+  position: relative;
+  height: 100vh;
+  min-height: 700px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.hero-video-wrapper {
+  position: absolute;
+  inset: 0;
+}
+
+.hero-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  animation: kenburns 25s ease-in-out infinite alternate;
+}
+
+@keyframes kenburns {
+  0% { transform: scale(1) translate(0, 0); }
+  100% { transform: scale(1.12) translate(-2%, -1%); }
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(10, 10, 10, 0.4) 0%,
+    rgba(10, 10, 10, 0.55) 50%,
+    rgba(10, 10, 10, 0.85) 100%
+  );
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 0 1.5rem;
+  max-width: 800px;
+}
+
+.hero-subtitle {
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1.5rem;
+}
+
+.hero-title {
+  font-family: var(--font-serif);
+  font-size: clamp(3rem, 8vw, 5.5rem);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: 0.02em;
+  margin-bottom: 1.5rem;
+}
+
+.hero-title span {
+  font-style: italic;
+  color: var(--gold-light);
+}
+
+.hero-desc {
+  font-size: 1rem;
+  font-weight: 300;
+  color: var(--text-muted);
+  margin-bottom: 2.5rem;
+  letter-spacing: 0.03em;
+}
+
+.btn-primary {
+  display: inline-block;
+  padding: 1rem 2.5rem;
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  transition: all var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--gold);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  z-index: -1;
+}
+
+.btn-primary:hover {
+  color: var(--bg);
+}
+
+.btn-primary:hover::before {
+  transform: scaleX(1);
+}
+
+.btn-secondary {
+  display: inline-block;
+  padding: 0.9rem 2rem;
+  border-bottom: 1px solid var(--gold);
+  color: var(--gold);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  transition: all var(--transition);
+}
+
+.btn-secondary:hover {
+  color: var(--gold-light);
+  border-color: var(--gold-light);
+  letter-spacing: 0.25em;
+}
+
+.scroll-indicator {
+  position: absolute;
+  bottom: 2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  z-index: 2;
+}
+
+.scroll-indicator span {
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.scroll-line {
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(to bottom, var(--gold), transparent);
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.4; transform: scaleY(0.7); }
+  50% { opacity: 1; transform: scaleY(1); }
+}
+
+/* Fade up animation */
+.fade-up {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.fade-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.hero-content .fade-up:nth-child(1) { transition-delay: 0.2s; }
+.hero-content .fade-up:nth-child(2) { transition-delay: 0.4s; }
+.hero-content .fade-up:nth-child(3) { transition-delay: 0.6s; }
+.hero-content .fade-up:nth-child(4) { transition-delay: 0.8s; }
+
+/* ===== Featured Banner ===== */
+.featured-banner {
+  padding: 4rem 2rem;
+  text-align: center;
+  background: linear-gradient(90deg, transparent, rgba(201, 169, 110, 0.08), transparent);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.banner-text h2 {
+  font-family: var(--font-serif);
+  font-size: 1.8rem;
+  font-weight: 400;
+  letter-spacing: 0.15em;
+  color: var(--gold);
+  margin-bottom: 0.5rem;
+}
+
+.banner-text p {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+}
+
+/* ===== Sections Common ===== */
+.section-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.section-label {
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1rem;
+}
+
+.section-title {
+  font-family: var(--font-serif);
+  font-size: clamp(2.2rem, 5vw, 3.2rem);
+  font-weight: 400;
+  letter-spacing: 0.05em;
+}
+
+/* ===== Collections ===== */
+.collections {
+  padding: 6rem 2.5rem;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.collections-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.collection-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.card-image {
+  position: relative;
+  aspect-ratio: 3/4;
+  overflow: hidden;
+  background: var(--bg-card);
+}
+
+.card-image img {
+  width: 100%;
+  height: 100%;
+  transition: transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.collection-card:hover .card-image img {
+  transform: scale(1.08);
+}
+
+.card-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 10, 10, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.collection-card:hover .card-overlay {
+  opacity: 1;
+}
+
+.card-link {
+  padding: 0.9rem 1.8rem;
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  transform: translateY(15px);
+  transition: all 0.4s ease;
+}
+
+.collection-card:hover .card-link {
+  transform: translateY(0);
+}
+
+.card-link:hover {
+  background: var(--gold);
+  color: var(--bg);
+}
+
+.card-info {
+  padding: 1.5rem 0;
+  text-align: center;
+}
+
+.card-info h3 {
+  font-family: var(--font-serif);
+  font-size: 1.4rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.3rem;
+}
+
+.card-info p {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+}
+
+/* ===== Products ===== */
+.products {
+  padding: 6rem 2.5rem;
+  max-width: 1440px;
+  margin: 0 auto;
+  background: var(--bg-elevated);
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+}
+
+.product-card {
+  group: true;
+}
+
+.product-image {
+  position: relative;
+  aspect-ratio: 3/4;
+  overflow: hidden;
+  background: var(--bg-card);
+  margin-bottom: 1.25rem;
+}
+
+.product-image img {
+  width: 100%;
+  height: 100%;
+  transition: transform 0.8s ease;
+}
+
+.product-card:hover .product-image img {
+  transform: scale(1.05);
+}
+
+.quick-view {
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  padding: 0.7rem 1.5rem;
+  background: rgba(10, 10, 10, 0.9);
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  opacity: 0;
+  transition: all 0.4s ease;
+}
+
+.product-card:hover .quick-view {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.quick-view:hover {
+  background: var(--gold);
+  color: var(--bg);
+}
+
+.product-info {
+  text-align: center;
+}
+
+.product-info h3 {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.4rem;
+}
+
+.product-price {
+  font-size: 0.8rem;
+  color: var(--gold);
+  letter-spacing: 0.05em;
+}
+
+/* ===== Lookbook ===== */
+.lookbook {
+  padding: 0;
+}
+
+.lookbook-item {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  min-height: 80vh;
+}
+
+.lookbook-image {
+  overflow: hidden;
+}
+
+.lookbook-image img {
+  width: 100%;
+  height: 100%;
+  min-height: 500px;
+  transition: transform 1.5s ease;
+}
+
+.lookbook-item:hover .lookbook-image img {
+  transform: scale(1.04);
+}
+
+.lookbook-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 4rem 5rem;
+  background: var(--bg);
+}
+
+.lookbook-content .section-label {
+  margin-bottom: 1rem;
+}
+
+.lookbook-content h2 {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 400;
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.03em;
+}
+
+.lookbook-content p {
+  color: var(--text-muted);
+  font-size: 1rem;
+  line-height: 1.8;
+  margin-bottom: 2.5rem;
+  max-width: 400px;
+}
+
+/* ===== About ===== */
+.about {
+  padding: 8rem 2.5rem;
+  text-align: center;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.about-text {
+  font-size: 1.1rem;
+  font-weight: 300;
+  color: var(--text-muted);
+  line-height: 1.9;
+  margin: 2rem auto 4rem;
+  max-width: 650px;
+}
+
+.about-stats {
+  display: flex;
+  justify-content: center;
+  gap: 5rem;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.stat-number {
+  font-family: var(--font-serif);
+  font-size: 2.5rem;
+  color: var(--gold);
+  letter-spacing: 0.05em;
+}
+
+.stat-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* ===== Contact / Newsletter ===== */
+.contact {
+  padding: 7rem 2.5rem;
+  background: linear-gradient(180deg, var(--bg-elevated) 0%, var(--bg) 100%);
+  text-align: center;
+  border-top: 1px solid var(--border);
+}
+
+.contact-inner {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.contact-desc {
+  color: var(--text-muted);
+  margin: 1.5rem 0 2.5rem;
+  font-size: 0.95rem;
+}
+
+.newsletter-form {
+  display: flex;
+  gap: 0;
+  max-width: 480px;
+  margin: 0 auto;
+  border: 1px solid var(--border);
+  transition: border-color var(--transition);
+}
+
+.newsletter-form:focus-within {
+  border-color: var(--gold);
+}
+
+.newsletter-form input {
+  flex: 1;
+  padding: 1.1rem 1.5rem;
+  background: transparent;
+  border: none;
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  letter-spacing: 0.03em;
+  outline: none;
+}
+
+.newsletter-form input::placeholder {
+  color: var(--text-muted);
+}
+
+.newsletter-form .btn-primary {
+  border: none;
+  border-left: 1px solid var(--border);
+  white-space: nowrap;
+}
+
+/* ===== Footer ===== */
+.footer {
+  padding: 4rem 2.5rem 2rem;
+  border-top: 1px solid var(--border);
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.footer-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 4rem;
+  margin-bottom: 3rem;
+  flex-wrap: wrap;
+}
+
+.footer-brand {
+  max-width: 280px;
+}
+
+.footer-logo {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  letter-spacing: 0.3em;
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.footer-brand p {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+.footer-links {
+  display: flex;
+  gap: 4rem;
+}
+
+.footer-col h4 {
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1.25rem;
+  font-weight: 500;
+}
+
+.footer-col a {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 0.7rem;
+  transition: color var(--transition);
+}
+
+.footer-col a:hover {
+  color: var(--gold);
+}
+
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border);
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.footer-bottom p {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.social-links {
+  display: flex;
+  gap: 2rem;
+}
+
+.social-links a {
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.social-links a:hover {
+  color: var(--gold);
+}
+
+/* ===== Reveal on scroll ===== */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.9s ease, transform 0.9s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 1100px) {
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .lookbook-item {
+    grid-template-columns: 1fr;
+  }
+  
+  .lookbook-content {
+    padding: 3rem 2.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .nav-container {
+    padding: 0 1.5rem;
+  }
+  
+  .nav-link {
+    display: none;
+  }
+  
+  .collections-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  
+  .products-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+  }
+  
+  .about-stats {
+    gap: 2.5rem;
+  }
+  
+  .footer-links {
+    gap: 2.5rem;
+  }
+  
+  .hero-title {
+    font-size: 2.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .products-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .about-stats {
+    flex-direction: column;
+    gap: 2rem;
+  }
+  
+  .newsletter-form {
+    flex-direction: column;
+  }
+  
+  .newsletter-form .btn-primary {
+    border-left: none;
+    border-top: 1px solid var(--border);
+  }
+  
+  .footer-top {
+    flex-direction: column;
+  }
+}
+
+</style>
+</head>
+<body>
+  <!-- Preloader -->
+  <div class="preloader" id="preloader">
+    <div class="preloader-logo">DAVIKO</div>
+    <div class="preloader-bar"><div class="preloader-progress"></div></div>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <button class="nav-menu-btn" id="menuBtn" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+      <a href="#home" class="nav-logo">DAVIKO</a>
+      <div class="nav-right">
+        <a href="#contact" class="nav-link">Contact</a>
+        <button class="nav-bag" aria-label="Bag">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-content">
+      <a href="#home" class="mobile-link">Home</a>
+      <a href="#collections" class="mobile-link">Collections</a>
+      <a href="#lookbook" class="mobile-link">Lookbook</a>
+      <a href="#about" class="mobile-link">About</a>
+      <a href="#contact" class="mobile-link">Contact</a>
+    </div>
+  </div>
+
+  <!-- Hero Section -->
+  <section class="hero" id="home">
+    <div class="hero-video-wrapper">
+      <img class="hero-video" src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=1920&q=90" alt="Daviko Luxury Fashion Hero" loading="eager">
+      <div class="hero-overlay"></div>
+    </div>
+    <div class="hero-content">
+      <p class="hero-subtitle fade-up">Autumn / Winter 2026</p>
+      <h1 class="hero-title fade-up">The Art of<br><span>Elegance</span></h1>
+      <p class="hero-desc fade-up">Where timeless craftsmanship meets contemporary desire.</p>
+      <a href="#collections" class="btn-primary fade-up">Discover Collection</a>
+    </div>
+    <div class="scroll-indicator">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- Featured Banner -->
+  <section class="featured-banner">
+    <div class="banner-text">
+      <h2>New Arrivals</h2>
+      <p>Exclusive pieces crafted for the discerning few.</p>
+    </div>
+  </section>
+
+  <!-- Collections -->
+  <section class="collections" id="collections">
+    <div class="section-header">
+      <p class="section-label">Explore</p>
+      <h2 class="section-title">Collections</h2>
+    </div>
+    <div class="collections-grid">
+      <article class="collection-card" data-category="women">
+        <div class="card-image">
+          <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?w=800&q=80" alt="Women's Collection" loading="lazy">
+          <div class="card-overlay">
+            <a href="#" class="card-link">Shop Women</a>
+          </div>
+        </div>
+        <div class="card-info">
+          <h3>Women</h3>
+          <p>Haute Couture & Ready-to-Wear</p>
+        </div>
+      </article>
+      <article class="collection-card" data-category="men">
+        <div class="card-image">
+          <img src="https://images.unsplash.com/photo-1617137968427-85924c800a22?w=800&q=80" alt="Men's Collection" loading="lazy">
+          <div class="card-overlay">
+            <a href="#" class="card-link">Shop Men</a>
+          </div>
+        </div>
+        <div class="card-info">
+          <h3>Men</h3>
+          <p>Tailoring & Contemporary</p>
+        </div>
+      </article>
+      <article class="collection-card" data-category="accessories">
+        <div class="card-image">
+          <img src="https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=800&q=80" alt="Accessories" loading="lazy">
+          <div class="card-overlay">
+            <a href="#" class="card-link">Shop Accessories</a>
+          </div>
+        </div>
+        <div class="card-info">
+          <h3>Accessories</h3>
+          <p>Bags, Jewelry & More</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- Product Showcase -->
+  <section class="products" id="lookbook">
+    <div class="section-header">
+      <p class="section-label">Curated</p>
+      <h2 class="section-title">Signature Pieces</h2>
+    </div>
+    <div class="products-grid">
+      <article class="product-card">
+        <div class="product-image">
+          <img src="https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=600&q=80" alt="Silk Evening Gown" loading="lazy">
+          <button class="quick-view">Quick View</button>
+        </div>
+        <div class="product-info">
+          <h3>Silk Evening Gown</h3>
+          <p class="product-price">$4,850</p>
+        </div>
+      </article>
+      <article class="product-card">
+        <div class="product-image">
+          <img src="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=600&q=80" alt="Cashmere Coat" loading="lazy">
+          <button class="quick-view">Quick View</button>
+        </div>
+        <div class="product-info">
+          <h3>Cashmere Overcoat</h3>
+          <p class="product-price">$3,200</p>
+        </div>
+      </article>
+      <article class="product-card">
+        <div class="product-image">
+          <img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=600&q=80" alt="Leather Handbag" loading="lazy">
+          <button class="quick-view">Quick View</button>
+        </div>
+        <div class="product-info">
+          <h3>Italian Leather Bag</h3>
+          <p class="product-price">$2,450</p>
+        </div>
+      </article>
+      <article class="product-card">
+        <div class="product-image">
+          <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=600&q=80" alt="Tailored Blazer" loading="lazy">
+          <button class="quick-view">Quick View</button>
+        </div>
+        <div class="product-info">
+          <h3>Tailored Blazer</h3>
+          <p class="product-price">$1,890</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- Lookbook Large -->
+  <section class="lookbook">
+    <div class="lookbook-item">
+      <div class="lookbook-image">
+        <img src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=1200&q=80" alt="Lookbook Editorial" loading="lazy">
+      </div>
+      <div class="lookbook-content">
+        <p class="section-label">Editorial</p>
+        <h2>The Midnight Collection</h2>
+        <p>A study in contrast. Deep blacks meet luminous golds in silhouettes that command presence.</p>
+        <a href="#" class="btn-secondary">View Lookbook</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section class="about" id="about">
+    <div class="about-content">
+      <p class="section-label">Our Story</p>
+      <h2 class="section-title">Crafted for the Extraordinary</h2>
+      <p class="about-text">
+        Daviko was born from a singular vision: to create garments that transcend seasons and trends. 
+        Each piece is a testament to Italian craftsmanship, refined in ateliers where tradition meets 
+        bold innovation. We dress those who understand that true luxury is not loud — it is felt.
+      </p>
+      <div class="about-stats">
+        <div class="stat">
+          <span class="stat-number">2014</span>
+          <span class="stat-label">Founded</span>
+        </div>
+        <div class="stat">
+          <span class="stat-number">12</span>
+          <span class="stat-label">Ateliers</span>
+        </div>
+        <div class="stat">
+          <span class="stat-number">48</span>
+          <span class="stat-label">Countries</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Newsletter / Contact -->
+  <section class="contact" id="contact">
+    <div class="contact-inner">
+      <p class="section-label">Stay Connected</p>
+      <h2 class="section-title">Join the Inner Circle</h2>
+      <p class="contact-desc">Be the first to discover new collections, exclusive events, and private previews.</p>
+      <form class="newsletter-form" id="newsletterForm">
+        <input type="email" placeholder="Your email address" required>
+        <button type="submit" class="btn-primary">Subscribe</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="#home" class="footer-logo">DAVIKO</a>
+        <p>Luxury redefined through craftsmanship and vision.</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>Shop</h4>
+          <a href="#">Women</a>
+          <a href="#">Men</a>
+          <a href="#">Accessories</a>
+          <a href="#">New Arrivals</a>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <a href="#about">About</a>
+          <a href="#">Careers</a>
+          <a href="#">Stores</a>
+          <a href="#">Sustainability</a>
+        </div>
+        <div class="footer-col">
+          <h4>Support</h4>
+          <a href="#">Contact</a>
+          <a href="#">Shipping</a>
+          <a href="#">Returns</a>
+          <a href="#">FAQ</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Daviko. All rights reserved.</p>
+      <div class="social-links">
+        <a href="#" aria-label="Instagram">Instagram</a>
+        <a href="#" aria-label="Pinterest">Pinterest</a>
+        <a href="#" aria-label="X">X</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+// ===== DAVIKO Luxury Website Scripts =====
+
+document.addEventListener('DOMContentLoaded', () => {
+  // Preloader
+  const preloader = document.getElementById('preloader');
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      preloader.classList.add('hidden');
+      // Trigger hero fade-ups
+      document.querySelectorAll('.hero-content .fade-up').forEach(el => {
+        el.classList.add('visible');
+      });
+    }, 2000);
+  });
+
+  // Navbar scroll effect
+  const navbar = document.getElementById('navbar');
+  let lastScroll = 0;
+
+  window.addEventListener('scroll', () => {
+    const currentScroll = window.pageYOffset;
+    if (currentScroll > 80) {
+      navbar.classList.add('scrolled');
+    } else {
+      navbar.classList.remove('scrolled');
+    }
+    lastScroll = currentScroll;
+  });
+
+  // Mobile menu
+  const menuBtn = document.getElementById('menuBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  const mobileLinks = document.querySelectorAll('.mobile-link');
+
+  menuBtn.addEventListener('click', () => {
+    menuBtn.classList.toggle('active');
+    mobileMenu.classList.toggle('open');
+    document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+  });
+
+  mobileLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      menuBtn.classList.remove('active');
+      mobileMenu.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+  });
+
+  // Smooth reveal on scroll
+  const revealElements = document.querySelectorAll(
+    '.section-header, .collection-card, .product-card, .lookbook-item, .about-content, .contact-inner, .stat'
+  );
+
+  revealElements.forEach(el => {
+    el.classList.add('reveal');
+  });
+
+  const observerOptions = {
+    root: null,
+    rootMargin: '0px 0px -80px 0px',
+    threshold: 0.1
+  };
+
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry, index) => {
+      if (entry.isIntersecting) {
+        // Stagger animation
+        setTimeout(() => {
+          entry.target.classList.add('visible');
+        }, index % 4 * 100);
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+
+  revealElements.forEach(el => revealObserver.observe(el));
+
+  // Newsletter form
+  const form = document.getElementById('newsletterForm');
+  if (form) {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const input = form.querySelector('input');
+      const btn = form.querySelector('button');
+      const originalText = btn.textContent;
+      
+      btn.textContent = 'Thank You';
+      btn.style.color = 'var(--bg)';
+      btn.style.background = 'var(--gold)';
+      input.value = '';
+      
+      setTimeout(() => {
+        btn.textContent = originalText;
+        btn.style.color = '';
+        btn.style.background = '';
+      }, 2500);
+    });
+  }
+
+  // Parallax effect for hero video (subtle)
+  const heroVideo = document.querySelector('.hero-video');
+  if (heroVideo) {
+    window.addEventListener('scroll', () => {
+      const scrolled = window.pageYOffset;
+      if (scrolled < window.innerHeight) {
+        heroVideo.style.transform = `translateY(${scrolled * 0.3}px) scale(1.05)`;
+      }
+    });
+  }
+
+  // Quick view buttons (demo)
+  document.querySelectorAll('.quick-view').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      btn.textContent = 'Added';
+      setTimeout(() => {
+        btn.textContent = 'Quick View';
+      }, 1500);
+    });
+  });
+});
+
+</script>
+</body>
+</html>
